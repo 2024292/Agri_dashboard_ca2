@@ -34,3 +34,17 @@ if items:
         st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (tonnes)'].sum().unstack())
 else:
     st.write('Select Items to display chart')
+
+
+    
+# Calculate and display unit price (Export Value per tonne)
+if items:
+    if dataset == 'Export Value':
+        unit_price_df = df[df['Item'].isin(items)].groupby(['Year', 'Item']).apply(
+            lambda x: x['Export Value (1000 USD)'].sum() / x['Export Quantity (tonnes)'].sum()
+        ).unstack()
+        st.write('Unit Price (USD per tonne)', unit_price_df)
+    elif dataset == 'Export Quantity':
+        st.write('Unit price calculation is only available for Export Value dataset.')
+else:
+    st.write('Select Items to display unit price')    
