@@ -36,11 +36,11 @@ filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items))]
 col1, col2 = st.columns(2)
 
 with col1:
-    st.write('Filtered Data')
+    st.write('Filtered Data', index=False)
     st.dataframe(filtered_df.style.set_table_styles(
-        [{'selector': 'th', 'props': [('max-width', '500px')]},
-         {'selector': 'td', 'props': [('max-width', '500px'), ('white-space', 'pre-wrap')]}]
-    ).set_properties(**{'width': 'auto'}), width=filtered_df.shape[1] * 500)
+        [{'selector': 'th', 'props': [('max-width', '200px')]},
+         {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'normal')]}]
+    ), width=filtered_df.shape[1] * 200)
 
 with col2:
     # Calculate and display unit price (Export Value per tonne) based on selected year and items
