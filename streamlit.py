@@ -10,7 +10,7 @@ quantity = pd.read_csv('Datasets/cleaned/export_quantity.csv')
 # Sidebar
 st.sidebar.title('Ireland Agricultural Export Data')
 # Sidebar options
-dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity', 'Countries Quantity', 'Countries Value'])
+dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity'])
 
 if dataset == 'Export Value':
     df = value
@@ -29,5 +29,7 @@ st.write('Filtered Data', filtered_df)
 # Line chart for selected items over time
 if items:
     st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
-else:
+elif items:
     st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (Tonnes)'].sum().unstack())
+else:
+    st.write('Select Items to display chart')
