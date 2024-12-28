@@ -28,8 +28,9 @@ st.write('Filtered Data', filtered_df)
 
 # Line chart for selected items over time
 if items:
-    st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
-elif items:
-    st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (Tonnes)'].sum().unstack())
+    if dataset == 'Export Value':
+        st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
+    elif dataset == 'Export Quantity':
+        st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (Tonnes)'].sum().unstack())
 else:
     st.write('Select Items to display chart')
