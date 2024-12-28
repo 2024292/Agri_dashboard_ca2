@@ -33,32 +33,12 @@ filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items)) & (df['Area'].i
 # Display table
 st.write('Filtered Data', filtered_df)
 
-# Load datasets for the visualizations
-countries = pd.read_csv('Datasets/Four_dairy_ex.csv.csv')
-Ireland_data = pd.read_csv('Datasets/Ireland_dairy_list.csv')
-import matplotlib.pyplot as plt
-
 # Main page
-st.title('Ireland Dairy Export Data')
+st.title('Ireland Agricultural Export Dashboard')
 
-# Time series plot for countries data
-st.subheader('Time Series of Dairy Exports by Country')
-fig, ax = plt.subplots()
-for country in countries['Area'].unique():
-    country_data = countries[countries['Area'] == country]
-    ax.plot(country_data['Year'], country_data['Value'], label=country)
-ax.set_xlabel('Year')
-ax.set_ylabel('Export Value')
-ax.legend()
-st.pyplot(fig)
+# Time series line chart
+st.subheader('Time Series of Selected Items and Countries')
+time_series_df = df[(df['Item'].isin(items)) & (df['Area'].isin(countries))]
+time_series_df = time_series_df.groupby(['Year']).sum().reset_index()
 
-# Time series plot for Ireland data
-st.subheader('Time Series of Dairy Exports in Ireland')
-fig, ax = plt.subplots()
-for item in Ireland_data['Item'].unique():
-    item_data = Ireland_data[Ireland_data['Item'] == item]
-    ax.plot(item_data['Year'], item_data['Value'], label=item)
-ax.set_xlabel('Year')
-ax.set_ylabel('Export Value')
-ax.legend()
-st.pyplot(fig)
+st.line_chart(time_series_df.set_index('Year'))
