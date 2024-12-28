@@ -10,7 +10,8 @@ except FileNotFoundError as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
-
+value = value.drop(columns=['Unnamed: 0'])
+quantity = quantity.drop(columns=['Unnamed: 0'])
 
 # Sidebar
 st.sidebar.title('Ireland Agricultural Export Data')
@@ -20,9 +21,9 @@ dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quanti
 
 # Select dataset
 if dataset == 'Export Value':
-    df = value['Item', 'Year', 'Export Value (1000 USD)']
+    df = value
 elif dataset == 'Export Quantity':
-    df = quantity['Item', 'Year', 'Export Quantity (tonnes)']
+    df = quantity
 
 # Select year and items
 year = st.sidebar.selectbox('Select Year', df['Year'].unique())
