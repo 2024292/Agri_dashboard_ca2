@@ -39,12 +39,14 @@ else:
     
 # Calculate and display unit price (Export Value per tonne)
 if items:
-    if dataset == 'Export Value':
-        unit_price_df = df[df['Item'].isin(items)].groupby(['Year', 'Item']).apply(
-            lambda x: x['Export Value (1000 USD)'].sum() / x['Export Quantity (tonnes)'].sum()
-        ).unstack()
-        st.write('Unit Price (USD per tonne)', unit_price_df)
-    elif dataset == 'Export Quantity':
-        st.write('Unit price calculation is only available for Export Value dataset.')
+    merged_df = pd.merge(
+        value[value['Item'].isin(items)],
+        quantity[quantity['Item'].isin(items)],
+        on=['Year', 'Item'],
+        suffixes=('_value', '_quantity')
+    )
+    merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
+    unit_price_df = merged_df.pivot_table(index='Year', columns='Item', values='Unit Price (USD per tonne)')
+    st.write('Unit Price (USD per tonne)', unit_price_df)
 else:
-    st.write('Select Items to display unit price')    
+    st.write('Select Items to display unit price')   
