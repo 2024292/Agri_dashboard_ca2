@@ -7,31 +7,26 @@ import numpy as np
 dairy_list = pd.read_csv('Datasets/Ireland_dairy_list.csv')
 four_dairy_ex = pd.read_csv('Datasets/Four_dairy_ex.csv')
 
-# Display datasets in the dashboard
-st.title('Ireland Agriculture Dashboard')
-st.header('Dairy List')
-st.dataframe(dairy_list)
+# Sidebar
+st.sidebar.title('Ireland Agricultural Export Data')
 
-st.header('Four Dairy Exports')
-st.dataframe(four_dairy_ex)
-# Add a selectbox to choose the year
-year = st.selectbox('Select Year', dairy_list['Year'].unique())
+# Select year or product
+option = st.sidebar.selectbox(
+    'Select View By',
+    ('By Year', 'By Product')
+)
 
-# Filter data based on the selected year
-filtered_dairy_list = dairy_list[dairy_list['Year'] == year]
-filtered_four_dairy_ex = four_dairy_ex[four_dairy_ex['Year'] == year]
+# Display data based on selection
+if option == 'By Year':
+    year = st.sidebar.selectbox('Select Year', dairy_list['Year'].unique())
+    filtered_data = dairy_list[dairy_list['Year'] == year]
+else:
+    product = st.sidebar.selectbox('Select Product', dairy_list['Product'].unique())
+    filtered_data = dairy_list[dairy_list['Product'] == product]
 
-# Display filtered datasets
-st.header(f'Dairy List for {year}')
-st.dataframe(filtered_dairy_list)
+# Display table
+st.write('Data Table', filtered_data)
 
-st.header(f'Four Dairy Exports for {year}')
-st.dataframe(filtered_four_dairy_ex)
-
-# Plotting
-st.header('Dairy List Plot')
-st.line_chart(filtered_dairy_list.set_index('Month'))
-
-st.header('Four Dairy Exports Plot')
-st.line_chart(filtered_four_dairy_ex.set_index('Month'))
+# Display line chart
+st.line_chart(filtered_data.set_index('Year' if option == 'By Year' else 'Product')['Value'])
 
