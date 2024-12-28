@@ -52,7 +52,8 @@ with col2:
         unit_price_df = merged_df[['Unit Price (USD per tonne)']]
         
         # Display unit price on the main page
-        st.write('Unit Price (1000 USD per tonne)', unit_price_df)
+        st.write('Unit Price (1000 USD per tonne)')
+        st.dataframe(unit_price_df, width=100)
     else:
         st.write('Select Items to display unit price')
 
