@@ -33,8 +33,6 @@ items = st.sidebar.multiselect('Select Items', df['Item'].unique())
 filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items))]
 
 # Display table and unit price side by side
-st.markdown("## Filtered Data and Unit Price")
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -42,7 +40,7 @@ with col1:
     st.dataframe(filtered_df.style.set_table_styles(
         [{'selector': 'th', 'props': [('max-width', '200px')]},
          {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'normal')]}]
-    ), width=filtered_df.shape[1] * 200)
+    ), width=int(filtered_df.shape[1] * 200 * 0.8))
 
 with col2:
     st.markdown("### Unit Price (1000 USD per tonne)")
@@ -59,7 +57,7 @@ with col2:
         st.dataframe(unit_price_df.style.set_table_styles(
             [{'selector': 'th', 'props': [('max-width', '200px')]},
              {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'normal')]}]
-        ), width=unit_price_df.shape[1] * 200)
+        ), width=int(unit_price_df.shape[1] * 200 * 0.2))
     else:
         st.write('Select Items to display unit price')
 
