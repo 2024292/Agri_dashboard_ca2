@@ -14,11 +14,24 @@ st.dataframe(dairy_list)
 
 st.header('Four Dairy Exports')
 st.dataframe(four_dairy_ex)
+# Add a selectbox to choose the year
+year = st.selectbox('Select Year', dairy_list['Year'].unique())
 
-# Add some basic statistics
-st.header('Basic Statistics')
-st.subheader('Dairy List Statistics')
-st.write(dairy_list.describe())
+# Filter data based on the selected year
+filtered_dairy_list = dairy_list[dairy_list['Year'] == year]
+filtered_four_dairy_ex = four_dairy_ex[four_dairy_ex['Year'] == year]
 
-st.subheader('Four Dairy Exports Statistics')
-st.write(four_dairy_ex.describe())
+# Display filtered datasets
+st.header(f'Dairy List for {year}')
+st.dataframe(filtered_dairy_list)
+
+st.header(f'Four Dairy Exports for {year}')
+st.dataframe(filtered_four_dairy_ex)
+
+# Plotting
+st.header('Dairy List Plot')
+st.line_chart(filtered_dairy_list.set_index('Month'))
+
+st.header('Four Dairy Exports Plot')
+st.line_chart(filtered_four_dairy_ex.set_index('Month'))
+
