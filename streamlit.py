@@ -33,12 +33,8 @@ filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items)) & (df['Area'].i
 # Display table
 st.write('Filtered Data', filtered_df)
 
-# Main page
-st.title('Ireland Agricultural Export Dashboard')
-
-# Time series line chart
-st.subheader('Time Series of Selected Items and Countries')
-time_series_df = df[(df['Item'].isin(items)) & (df['Area'].isin(countries))]
-time_series_df = time_series_df.groupby(['Year']).sum().reset_index()
-
-st.line_chart(time_series_df.set_index('Year'))
+# Line chart for selected items over time
+if items:
+    st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
+else:
+    st.write("Please select at least one item to display the line chart.")
