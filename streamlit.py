@@ -14,7 +14,7 @@ except FileNotFoundError as e:
 st.sidebar.title('Ireland Agricultural Export Data')
 
 # Sidebar options
-dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity', 'Unit Price (USD per tonne)'])
+dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity'])
 
 # Select dataset
 if dataset == 'Export Value':
@@ -48,7 +48,7 @@ with col2:
         unit_price_df = merged_df.pivot_table(index='Year', columns='Item', values='Unit Price (USD per tonne)')
         
         # Display unit price on the main page
-        st.write('Unit Price (USD per tonne)', unit_price_df)
+        st.write('Unit Price (1000 USD per tonne)', unit_price_df)
     else:
         st.write('Select Items to display unit price')
 
@@ -60,4 +60,5 @@ if items:
         st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (tonnes)'].sum().unstack())
 else:
     st.write('Select Items to display chart')
+
 
