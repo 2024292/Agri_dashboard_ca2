@@ -48,7 +48,7 @@ if items:
     merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
     unit_price_df = merged_df.pivot_table(index='Year', columns='Item', values='Unit Price (USD per tonne)')
     
-    # Display unit price in the sidebar
-    st.sidebar.write('Unit Price (USD per tonne)', unit_price_df)
+    # Display unit price on the main page
+    st.write('Unit Price (USD per tonne)', unit_price_df)
 else:
-    st.sidebar.write('Select Items to display unit price') 
+    st.write('Select Items to display unit price')
