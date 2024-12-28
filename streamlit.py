@@ -31,6 +31,6 @@ if items:
     if dataset == 'Export Value':
         st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
     elif dataset == 'Export Quantity':
-        st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (Tonnes)'].sum().unstack())
+        st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (tonnes)'].sum().unstack())
 else:
     st.write('Select Items to display chart')
