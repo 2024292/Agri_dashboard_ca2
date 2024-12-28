@@ -38,9 +38,9 @@ col1, col2 = st.columns(2)
 with col1:
     st.write('Filtered Data')
     st.dataframe(filtered_df.style.set_table_styles(
-        [{'selector': 'th', 'props': [('max-width', '200px')]},
-         {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'pre-wrap')]}]
-    ), width=filtered_df.shape[1] * 100)
+        [{'selector': 'th', 'props': [('max-width', '400px')]},
+         {'selector': 'td', 'props': [('max-width', '400px'), ('white-space', 'pre-wrap')]}]
+    ), width=filtered_df.shape[1] * 300)
 
 with col2:
     # Calculate and display unit price (Export Value per tonne) based on selected year and items
