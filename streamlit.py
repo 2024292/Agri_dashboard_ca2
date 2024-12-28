@@ -4,29 +4,34 @@ import numpy as np
 
 
 # Load datasets
-dairy_list = pd.read_csv('Datasets/Ireland_dairy_list.csv')
-four_dairy_ex = pd.read_csv('Datasets/Four_dairy_ex.csv')
+value = pd.read_csv('Datasets/cleaned/export_value.csv') 
+quantity = pd.read_csv('Datasets/cleaned/export_quantity.csv')
+c_quantity = pd.read_csv('Datasets/cleaned/countries_quantity.csv')
+c_value = pd.read_csv('Datasets/cleaned/countries_value.csv')
 
 # Sidebar
 st.sidebar.title('Ireland Agricultural Export Data')
+# Sidebar options
+dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity', 'Countries Quantity', 'Countries Value'])
 
-# Select year or product
-option = st.sidebar.selectbox(
-    'Select View By',
-    ('By Year', 'By Product')
-)
-
-# Display data based on selection
-if option == 'By Year':
-    year = st.sidebar.selectbox('Select Year', dairy_list['Year'].unique())
-    filtered_data = dairy_list[dairy_list['Year'] == year]
+if dataset == 'Export Value':
+    df = value
+elif dataset == 'Export Quantity':
+    df = quantity
+elif dataset == 'Countries Quantity':
+    df = c_quantity
 else:
-    product = st.sidebar.selectbox('Select Product', dairy_list['Product'].unique())
-    filtered_data = dairy_list[dairy_list['Product'] == product]
+    df = c_value
+
+year = st.sidebar.selectbox('Select Year', df['Year'].unique())
+items = st.sidebar.multiselect('Select Items', df['Item'].unique())
+countries = st.sidebar.multiselect('Select Countries', df['Country'].unique())
+
+# Filter data based on selections
+filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items)) & (df['Country'].isin(countries))]
 
 # Display table
-st.write('Data Table', filtered_data)
+st.write('Filtered Data', filtered_df)
 
 # Display line chart
-st.line_chart(filtered_data.set_index('Year' if option == 'By Year' else 'Product')['Value'])
-
+st.line_chart(filtered_df.set_index('Year'))
