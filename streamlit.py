@@ -10,7 +10,7 @@ quantity = pd.read_csv('Datasets/cleaned/export_quantity.csv')
 # Sidebar
 st.sidebar.title('Ireland Agricultural Export Data')
 # Sidebar options
-dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity'])
+dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quantity','Unit Price (USD per tonne)'])
 
 if dataset == 'Export Value':
     df = value
@@ -37,11 +37,11 @@ else:
 
 
     
-# Calculate and display unit price (Export Value per tonne)
+# Calculate and display unit price (Export Value per tonne) based on selected year and items
 if items:
     merged_df = pd.merge(
-        value[value['Item'].isin(items)],
-        quantity[quantity['Item'].isin(items)],
+        value[(value['Year'] == year) & (value['Item'].isin(items))],
+        quantity[(quantity['Year'] == year) & (quantity['Item'].isin(items))],
         on=['Year', 'Item'],
         suffixes=('_value', '_quantity')
     )
