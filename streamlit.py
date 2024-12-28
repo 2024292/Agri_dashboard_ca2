@@ -10,8 +10,8 @@ except FileNotFoundError as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
-value = value.drop(columns=['Unnamed: 0'])
-quantity = quantity.drop(columns=['Unnamed: 0'])
+value = value[['Item', 'Year', 'Export Value (1000 USD)']]
+quantity = quantity[['Item', 'Year', 'Export Quantity (tonnes)']]
 
 # Sidebar
 st.sidebar.title('Ireland Agricultural Export Data')
