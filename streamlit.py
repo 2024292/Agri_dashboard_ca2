@@ -10,8 +10,6 @@ except FileNotFoundError as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
-value = value['Item', 'Year', 'Export Value (1000 USD)']
-quantity = quantity['Item', 'Year', 'Export Quantity (tonnes)']
 
 
 # Sidebar
@@ -22,9 +20,9 @@ dataset = st.sidebar.selectbox('Select Dataset', ['Export Value', 'Export Quanti
 
 # Select dataset
 if dataset == 'Export Value':
-    df = value
+    df = value['Item', 'Year', 'Export Value (1000 USD)']
 elif dataset == 'Export Quantity':
-    df = quantity
+    df = quantity['Item', 'Year', 'Export Quantity (tonnes)']
 
 # Select year and items
 year = st.sidebar.selectbox('Select Year', df['Year'].unique())
