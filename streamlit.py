@@ -36,14 +36,11 @@ filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items))]
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### Filtered Data")
-    st.dataframe(filtered_df.style.set_table_styles(
-        [{'selector': 'th', 'props': [('max-width', '200px')]},
-         {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'normal')]}]
-    ), width=int(filtered_df.shape[1] * 200 * 0.8))
+    st.write('Filtered Data')
+    st.dataframe(filtered_df, width=filtered_df.shape[1] * 500)
 
 with col2:
-    st.markdown("### Unit Price (1000 USD per tonne)")
+    # Calculate and display unit price (Export Value per tonne) based on selected year and items
     if items:
         merged_df = pd.merge(
             value[(value['Year'] == year) & (value['Item'].isin(items))],
@@ -52,17 +49,14 @@ with col2:
             suffixes=('_value', '_quantity')
         )
         merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
-        unit_price_df = merged_df[['Item', 'Unit Price (USD per tonne)']]
+        unit_price_df = merged_df[['Unit Price (USD per tonne)']]
         
-        st.dataframe(unit_price_df.style.set_table_styles(
-            [{'selector': 'th', 'props': [('max-width', '200px')]},
-             {'selector': 'td', 'props': [('max-width', '200px'), ('white-space', 'normal')]}]
-        ), width=int(unit_price_df.shape[1] * 200 * 0.2))
+        # Display unit price on the main page
+        st.write('Unit Price (1000 USD per tonne)', unit_price_df)
     else:
         st.write('Select Items to display unit price')
 
 # Line chart for selected items over time
-st.markdown("## Export Data Over Time")
 if items:
     if dataset == 'Export Value':
         st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Value (1000 USD)'].sum().unstack())
@@ -70,3 +64,5 @@ if items:
         st.line_chart(df[df['Item'].isin(items)].groupby(['Year', 'Item'])['Export Quantity (tonnes)'].sum().unstack())
 else:
     st.write('Select Items to display chart')
+
+
