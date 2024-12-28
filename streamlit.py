@@ -37,7 +37,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.write('Filtered Data')
-    st.dataframe(filtered_df, width=900)
+    st.dataframe(filtered_df)
 
 with col2:
     # Calculate and display unit price (Export Value per tonne) based on selected year and items
@@ -52,8 +52,7 @@ with col2:
         unit_price_df = merged_df[['Unit Price (USD per tonne)']]
         
         # Display unit price on the main page
-        st.write('Unit Price (1000 USD per tonne)')
-        st.dataframe(unit_price_df, width=100)
+        st.write('Unit Price (1000 USD per tonne)', unit_price_df)
     else:
         st.write('Select Items to display unit price')
 
