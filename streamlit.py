@@ -32,29 +32,24 @@ items = st.sidebar.multiselect('Select Items', df['Item'].unique())
 # Filter data based on selections
 filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items))]
 
-# Display table and unit price side by side
-col1, col2 = st.columns(2)
+# Display table and unit price one below the other
+st.write('Filtered Data', filtered_df)
 
-with col1:
-    st.write('Filtered Data')
-    st.dataframe(filtered_df, width=filtered_df.shape[1] * 200)
-
-with col2:
-    # Calculate and display unit price (Export Value per tonne) based on selected year and items
-    if items:
-        merged_df = pd.merge(
-            value[(value['Year'] == year) & (value['Item'].isin(items))],
-            quantity[(quantity['Year'] == year) & (quantity['Item'].isin(items))],
-            on=['Year', 'Item'],
-            suffixes=('_value', '_quantity')
-        )
-        merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
-        unit_price_df = merged_df[['Unit Price (USD per tonne)']]
-        
-        # Display unit price on the main page
-        st.write('Unit Price (1000 USD per tonne)', unit_price_df)
-    else:
-        st.write('Select Items to display unit price')
+# Calculate and display unit price (Export Value per tonne) based on selected year and items
+if items:
+    merged_df = pd.merge(
+        value[(value['Year'] == year) & (value['Item'].isin(items))],
+        quantity[(quantity['Year'] == year) & (quantity['Item'].isin(items))],
+        on=['Year', 'Item'],
+        suffixes=('_value', '_quantity')
+    )
+    merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
+    unit_price_df = merged_df[['Year', 'Item', 'Unit Price (USD per tonne)']]
+    
+    # Display unit price on the main page
+    st.write('Unit Price (1000 USD per tonne)', unit_price_df)
+else:
+    st.write('Select Items to display unit price')
 
 # Line chart for selected items over time
 if items:
