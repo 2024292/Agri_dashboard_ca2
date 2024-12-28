@@ -25,10 +25,10 @@ else:
 
 year = st.sidebar.selectbox('Select Year', df['Year'].unique())
 items = st.sidebar.multiselect('Select Items', df['Item'].unique())
-countries = st.sidebar.multiselect('Select Countries', df['Country'].unique())
+countries = st.sidebar.multiselect('Select Countries', df['Area'].unique())
 
 # Filter data based on selections
-filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items)) & (df['Country'].isin(countries))]
+filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items)) & (df['Area'].isin(countries))]
 
 # Display table
 st.write('Filtered Data', filtered_df)
