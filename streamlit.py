@@ -48,7 +48,7 @@ with col2:
             suffixes=('_value', '_quantity')
         )
         merged_df['Unit Price (USD per tonne)'] = merged_df['Export Value (1000 USD)'] / merged_df['Export Quantity (tonnes)']
-        unit_price_df = merged_df[['Year', 'Item', 'Unit Price (USD per tonne)']]
+        unit_price_df = merged_df[['Unit Price (USD per tonne)']]
         
         # Display unit price on the main page
         st.write('Unit Price (1000 USD per tonne)', unit_price_df)
