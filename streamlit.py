@@ -36,7 +36,8 @@ filtered_df = df[(df['Year'] == year) & (df['Item'].isin(items))]
 col1, col2 = st.columns(2)
 
 with col1:
-    st.write('Filtered Data', filtered_df)
+    st.write('Filtered Data')
+    st.dataframe(filtered_df, width=filtered_df.shape[1] * 100)
 
 with col2:
     # Calculate and display unit price (Export Value per tonne) based on selected year and items
