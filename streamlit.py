@@ -37,7 +37,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.write('Filtered Data')
-    st.dataframe(filtered_df)
+    st.dataframe(filtered_df, width=filtered_df.shape[1] * 200)
 
 with col2:
     # Calculate and display unit price (Export Value per tonne) based on selected year and items
